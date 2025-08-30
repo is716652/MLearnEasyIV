@@ -1,0 +1,14 @@
+{
+  "name": "MLearnEasy Uni",
+  "appid": "",
+  "description": "",
+  "versionName": "0.0.1",
+  "versionCode": "001",
+  "transformPx": false,
+  "h5": {
+    "title": "MLearnEasy",
+    "router": {
+      "mode": "hash"
+    }
+  }
+}

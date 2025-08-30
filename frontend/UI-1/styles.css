@@ -1,0 +1,396 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Times New Roman', serif;
+    background: linear-gradient(135deg, #f8f6f0 0%, #f5f2e9 100%);
+    min-height: 100vh;
+    position: relative;
+}
+
+/* 状态栏样式 */
+.status-bar {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: #d4af37;
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.status-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.status-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.signal-icon {
+    background: linear-gradient(45deg, #d4af37, #f4d03f);
+    width: 18px;
+    height: 12px;
+    position: relative;
+}
+
+.signal-icon::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 3px;
+    height: 4px;
+    background: #d4af37;
+    border-radius: 1px;
+}
+
+.signal-icon::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 4px;
+    width: 3px;
+    height: 6px;
+    background: #d4af37;
+    border-radius: 1px;
+}
+
+.battery-icon {
+    width: 24px;
+    height: 12px;
+    border: 1px solid #d4af37;
+    border-radius: 2px;
+    position: relative;
+    background: linear-gradient(45deg, #d4af37, #f4d03f);
+}
+
+.battery-icon::after {
+    content: '';
+    position: absolute;
+    right: -3px;
+    top: 3px;
+    width: 2px;
+    height: 6px;
+    background: #d4af37;
+    border-radius: 1px;
+}
+
+/* 主容器 */
+.main-container {
+    padding: 20px;
+    padding-bottom: 80px;
+}
+
+/* 今日重点区域 */
+.focus-area {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(44, 62, 80, 0.3);
+}
+
+.focus-area::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(180deg); }
+}
+
+.focus-title {
+    color: #d4af37;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.focus-content {
+    color: #ecf0f1;
+    font-size: 16px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 1;
+}
+
+/* 课程卡片 */
+.course-section {
+    margin-bottom: 32px;
+}
+
+.section-title {
+    font-size: 20px;
+    color: #2c3e50;
+    margin-bottom: 16px;
+    font-weight: bold;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, #d4af37, #f4d03f);
+}
+
+.course-card {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #d4af37, #f4d03f);
+}
+
+.course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.course-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.course-badge {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #2c3e50;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.course-title {
+    font-size: 18px;
+    color: #2c3e50;
+    font-weight: bold;
+}
+
+.course-info {
+    color: #7f8c8d;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* 底部导航栏 */
+.nav-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 12px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.nav-item.active {
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    color: #2c3e50;
+}
+
+.nav-item:not(.active) {
+    color: #7f8c8d;
+}
+
+.nav-item:hover:not(.active) {
+    background: rgba(212, 175, 55, 0.1);
+    color: #d4af37;
+}
+
+.nav-icon {
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+
+.nav-icon.home::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 16px;
+    height: 12px;
+    border: 2px solid currentColor;
+    border-radius: 2px;
+}
+
+.nav-icon.home::after {
+    content: '';
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-bottom: 8px solid currentColor;
+}
+
+.nav-icon.search::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+
+.nav-icon.search::after {
+    content: '';
+    position: absolute;
+    top: 60%;
+    left: 60%;
+    width: 6px;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(45deg);
+}
+
+.nav-icon.book::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 16px;
+    border: 2px solid currentColor;
+    border-radius: 2px;
+}
+
+.nav-icon.profile::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    border: 2px solid currentColor;
+    border-radius: 50%;
+}
+
+.nav-text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* 按钮样式 */
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #d4af37, #f4d03f);
+    color: #2c3e50;
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(212, 175, 55, 0.4);
+}
+
+.btn-primary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: #d4af37;
+    border: 2px solid #d4af37;
+}
+
+.btn-secondary:hover {
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .main-container {
+        padding: 16px;
+    }
+    
+    .focus-area {
+        padding: 20px;
+    }
+    
+    .course-card {
+        padding: 16px;
+    }
+}

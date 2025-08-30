@@ -1,0 +1,34 @@
+{
+  "name": "frontend-uni",
+  "private": true,
+  "version": "0.0.1",
+  "type": "module",
+  "scripts": {
+    "dev": "cross-env DEBUG=uni:* UNI_PLATFORM=h5 UNI_INPUT_DIR=src PORT=90 vite",
+    "dev:5173": "cross-env DEBUG=uni:* UNI_PLATFORM=h5 UNI_INPUT_DIR=src PORT=5173 vite",
+    "build:h5": "cross-env UNI_PLATFORM=h5 UNI_INPUT_DIR=src vite build",
+    "preview": "vite preview --port 90"
+  },
+  "dependencies": {
+    "pinia": "^2.3.1",
+    "vue": "^3.4.21",
+    "dompurify": "^3.2.6",
+    "echarts": "^5.5.0",
+    "katex": "^0.16.22",
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.4.19",
+    "@dcloudio/uni-app": "^3.0.0-alpha-4080120250821001",
+    "@dcloudio/uni-cli-shared": "^3.0.0-alpha-4080120250821001",
+    "@dcloudio/uni-components": "^3.0.0-alpha-4080120250821001",
+    "@dcloudio/uni-h5": "^3.0.0-alpha-4080120250821001",
+    "@dcloudio/uni-shared": "^3.0.0-alpha-4080120250821001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-4080120250821001",
+    "@types/markdown-it": "^14.1.2",
+    "@types/node": "^20.11.20",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.4.2",
+    "vite": "^5.2.2"
+  }
+}

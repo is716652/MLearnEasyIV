@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学术精致风UI界面</title>
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- MathJax 配置与脚本（支持 $...$ 与 $$...$$ 渲染） -->
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [["$", "$"], ["\\(", "\\)"]],
+          displayMath: [["$$", "$$"], ["\\[", "\\]"]],
+          processEscapes: true
+        },
+        svg: { fontCache: 'global' }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+    <!-- Markdown 渲染（marked） -->
+    <script defer src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <div class="status-left">
+            <div class="signal-icon"></div>
+            <span>WiFi</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">14:30</span>
+            <div class="battery-icon"></div>
+        </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <div class="main-container">
+        <!-- 今日重点区域 -->
+        <div class="focus-area">
+            <h2 class="focus-title">今日重点</h2>
+            <p class="focus-content">
+                深入探讨量子力学的基本原理，理解波函数坍缩与测量问题的哲学内涵。
+                今日将重点分析薛定谔猫思想实验的现代诠释。
+            </p>
+        </div>
+
+        <!-- 课程列表 -->
+        <div class="course-section">
+            <h3 class="section-title">进行中的课程</h3>
+            
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">Q</div>
+                    <h4 class="course-title">量子力学基础</h4>
+                </div>
+                <p class="course-info">
+                    第12章：量子纠缠与贝尔不等式<br>
+                    进度：75% | 剩余时间：2小时
+                </p>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">M</div>
+                    <h4 class="course-title">数学分析</h4>
+                </div>
+                <p class="course-info">
+                    第8章：多元函数微分学<br>
+                    进度：60% | 剩余时间：3小时
+                </p>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">P</div>
+                    <h4 class="course-title">哲学导论</h4>
+                </div>
+                <p class="course-info">
+                    第5章：认识论与知识论<br>
+                    进度：40% | 剩余时间：4小时
+                </p>
+            </div>
+        </div>
+
+        <!-- 推荐课程 -->
+        <div class="course-section">
+            <h3 class="section-title">推荐课程</h3>
+            
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">C</div>
+                    <h4 class="course-title">计算理论</h4>
+                </div>
+                <p class="course-info">
+                    图灵机与可计算性理论<br>
+                    难度：高级 | 时长：8周
+                </p>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">L</div>
+                    <h4 class="course-title">逻辑学</h4>
+                </div>
+                <p class="course-info">
+                    形式逻辑与证明论<br>
+                    难度：中级 | 时长：6周
+                </p>
+            </div>
+        </div>
+
+        <!-- ===== API 测试演示区：Markdown + LaTeX + 图表 ===== -->
+        <div class="course-section" id="api-demo">
+            <h3 class="section-title">API 测试演示（Markdown / LaTeX / 图表）</h3>
+            <div style="margin: 12px 0;">
+                <button id="load-demo-btn" class="nav-item" style="cursor:pointer;">加载后端示例数据</button>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">MD</div>
+                    <h4 class="course-title">Markdown 渲染</h4>
+                </div>
+                <div id="mdContainer" class="course-info" style="color:#2c3e50"></div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">∑</div>
+                    <h4 class="course-title">LaTeX 公式渲染</h4>
+                </div>
+                <div id="formulaContainer" class="course-info" style="color:#2c3e50"></div>
+            </div>
+
+            <div class="course-card">
+                <div class="course-header">
+                    <div class="course-badge">📈</div>
+                    <h4 class="course-title">图表展示</h4>
+                </div>
+                <div id="chartsContainer" class="course-info" style="color:#2c3e50; display:flex; flex-wrap:wrap; gap:12px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航栏 -->
+    <div class="nav-bar">
+        <div class="nav-item active">
+            <div class="nav-icon home"></div>
+            <span class="nav-text">首页</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon search"></div>
+            <span class="nav-text">搜索</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon book"></div>
+            <span class="nav-text">课程</span>
+        </div>
+        <div class="nav-item">
+            <div class="nav-icon profile"></div>
+            <span class="nav-text">我的</span>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
