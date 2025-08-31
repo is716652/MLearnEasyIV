@@ -36,6 +36,10 @@
       "style": { "navigationStyle": "custom", "navigationBarTitleText": "个人中心" }
     },
     {
+      "path": "pages/user/favorites",
+      "style": { "navigationStyle": "custom", "navigationBarTitleText": "我的收藏", "enablePullDownRefresh": true }
+    },
+    {
       "path": "pages/order/payment",
       "style": { "navigationStyle": "custom", "navigationBarTitleText": "支付" }
     },

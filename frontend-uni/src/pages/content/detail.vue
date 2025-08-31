@@ -3,6 +3,9 @@
     <div class="header">
       <button class="back" @click="goBack">返回</button>
       <h2 class="title">{{ detail?.title || '加载中…' }}</h2>
+      <button v-if="detail" class="fav" @click="toggleFavorite" :disabled="favLoading">
+        {{ isFavorited ? (favLoading ? '取消中…' : '已收藏，点此取消') : (favLoading ? '收藏中…' : '收藏') }}
+      </button>
     </div>
 
     <div v-if="errorMsg" class="error">{{ errorMsg }}</div>
@@ -64,6 +67,10 @@ import * as echarts from 'echarts'
 import MarkdownIt from 'markdown-it'
 import DOMPurify from 'dompurify'
 
+// 收藏相关状态
+const isFavorited = ref(false)
+const favLoading = ref(false)
+
 const md = new MarkdownIt({
   html: false,
   linkify: true,
@@ -87,6 +94,46 @@ const chartInstances = new Map<string, echarts.ECharts>()
 
 function goBack() {
   history.length > 1 ? history.back() : (location.href = '#/pages/index/index')
+}
+
+async function ensureFavoriteState() {
+  try {
+    const me = await api.me().catch(() => null)
+    if (!me || !detail.value?.id) { isFavorited.value = false; return }
+    const list = await api.listFavorites().catch(() => [])
+    isFavorited.value = list.some(x => Number(x.content_id) === Number(detail.value!.id))
+  } catch { isFavorited.value = false }
+}
+
+async function toggleFavorite() {
+  if (!detail.value?.id) return
+  try {
+    // 检查登录
+    await api.me()
+  } catch {
+    (uni as any)?.showToast?.({ title: '请先登录', icon: 'none' })
+    setTimeout(() => { try { location.hash = '#/pages/auth/login' } catch {} }, 300)
+    return
+  }
+  favLoading.value = true
+  try {
+    if (isFavorited.value) {
+      await api.removeFavorite(detail.value.id)
+      isFavorited.value = false
+      try { sessionStorage.setItem('fav_change', JSON.stringify({ id: detail.value.id, action: 'removed', ts: Date.now() })) } catch {}
+      ;(uni as any)?.showToast?.({ title: '已取消收藏', icon: 'success' })
+    } else {
+      await api.addFavorite(detail.value.id)
+      isFavorited.value = true
+      try { sessionStorage.setItem('fav_change', JSON.stringify({ id: detail.value.id, action: 'added', ts: Date.now() })) } catch {}
+      ;(uni as any)?.showToast?.({ title: '已收藏', icon: 'success' })
+    }
+  } catch (e: any) {
+    console.error(e)
+    ;(uni as any)?.showToast?.({ title: e?.message || '操作失败', icon: 'none' })
+  } finally {
+    favLoading.value = false
+  }
 }
 
 function isBase64Png(v: any) {
@@ -239,6 +286,7 @@ async function fetchDetailByCurrentId(force = false) {
 
     renderFormulas()
     await renderCharts()
+    await ensureFavoriteState()
   } catch (e: any) {
     console.error(e)
     errorMsg.value = e?.message || '加载详情失败'
@@ -294,3 +342,4 @@ onBeforeUnmount(() => {
 .error { color:#c0392b; background:#fdecea; padding:8px 12px; border-radius:8px; margin-bottom:12px; }
 .chart-canvas { width: 100%; height: 260px; }
 </style>
+.fav { padding: 6px 10px; border: 1px solid #d4af37; background: #fffbe6; border-radius: 6px; cursor: pointer; }

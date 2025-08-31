@@ -38,6 +38,17 @@ app.include_router(search.router, prefix="/api/v1", tags=["search"])
 app.include_router(utils.router, prefix="/api/v1", tags=["utils"])
 app.include_router(importer.router, prefix="/api/v1", tags=["importer"])
 
+# Conditionally include auth module
+if os.getenv("AUTH_MODULE_ENABLED", "0") in ("1", "true", "True", "yes", "on"):
+    from app.auth import routes_auth as auth_routes
+    app.include_router(auth_routes.router, prefix="/api/v1/auth", tags=["auth"]) 
+
+
+# Re-enable Swagger UI at /docs
+@app.get("/docs")
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(openapi_url=app.openapi_url, title=app.title + " - Swagger UI")
+
 
 @app.get("/")
 async def root():
@@ -47,14 +58,3 @@ async def root():
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
-
-
-# Custom Swagger UI using alternative CDN (BootCDN) to avoid blocked default CDN
-@app.get("/docs", include_in_schema=False)
-async def custom_swagger_ui_html():
-    return get_swagger_ui_html(
-        openapi_url=app.openapi_url,
-        title="简单学机器学习API - 文档",
-        swagger_js_url="https://cdn.staticfile.org/swagger-ui/5.17.14/swagger-ui-bundle.min.js",
-        swagger_css_url="https://cdn.staticfile.org/swagger-ui/5.17.14/swagger-ui.min.css",
-    )
